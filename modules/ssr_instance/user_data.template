@@ -1,0 +1,27 @@
+#cloud-config
+write_files:
+- path: /etc/128T-hardware-bootstrapper/onboarding-config.json
+  content: |
+    {
+      "registration-code": "${reg_code}",
+      "ssr-version": "${ssr_version}",
+      "name": "${router_name}",
+      "version": "2.0",
+      "mode": "mist-managed",
+      "cloud-provider": "gcp",
+      "devicemap": {
+        "ethernet": [
+          {
+            "type": "WAN",
+            "name": "ge-0-0",
+            "pciAddress": "0000:00:04.0",
+            "vmbusId": null
+          }, {
+            "type": "LAN",
+            "name": "ge-0-1",
+            "pciAddress": "0000:00:05.0",
+            "vmbusId": null
+          }
+        ]
+      }
+    }

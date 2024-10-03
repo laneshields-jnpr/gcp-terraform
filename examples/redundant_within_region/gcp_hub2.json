@@ -1,0 +1,123 @@
+{
+  "ip_configs": {
+    "gcp": {
+      "type": "static",
+      "ip": "{{internal_private_address}}",
+      "netmask": "/{{internal_prefix}}"
+    }
+  },
+  "dhcpd_config": {
+    "enabled": true
+  },
+  "ospf_areas": {},
+  "port_config": {
+    "ge-0/0/0": {
+      "name": "gcp-external",
+      "usage": "wan",
+      "aggregated": false,
+      "redundant": false,
+      "critical": false,
+      "disabled": false,
+      "wan_type": "broadband",
+      "ip_config": {
+        "type": "static",
+        "ip": "{{external_private_address}}",
+        "netmask": "/{{external_prefix}}",
+        "gateway": "{{external_gateway}}"
+      },
+      "wan_ext_ip": "{{external_public_address}}",
+      "disable_autoneg": false,
+      "wan_source_nat": {
+        "disabled": false
+      },
+      "vpn_paths": {
+        "gcp_hub2-gcp-external.OrgOverlay": {
+          "role": "hub"
+        }
+      }
+    },
+    "ge-0/0/1": {
+      "networks": [
+        "gcp"
+      ],
+      "usage": "lan",
+      "aggregated": false,
+      "redundant": false,
+      "critical": false,
+      "disabled": false
+    }
+  },
+  "bgp_config": {
+    "gcp_router": {
+      "networks": [
+        "gcp"
+      ],
+      "via": "lan",
+      "type": "external",
+      "no_readvertise_to_overlay": false,
+      "local_as": "{{ssr_asn}}",
+      "hold_time": 90,
+      "graceful_restart_time": 120,
+      "neighbors": {
+        "{{gcp_neighbor}}": {
+          "disabled": false,
+          "neighbor_as": "{{gcp_asn}}",
+          "import_policy": "prepend_gcp_asn_3x",
+          "export_policy": "prepend_ssr_asn_3x"
+        }
+      },
+      "disable_bfd": false
+    }
+  },
+  "routing_policies": {
+    "prepend_ssr_asn_3x": {
+      "terms": [
+        {
+          "actions": {
+            "accept": true,
+            "prepend_as_path": [
+              "{{ssr_asn}}",
+              "{{ssr_asn}}",
+              "{{ssr_asn}}"
+            ]
+          }
+        }
+      ]
+    },
+    "prepend_gcp_asn_3x": {
+      "terms": [
+        {
+          "actions": {
+            "accept": true,
+            "prepend_as_path": [
+              "{{gcp_asn}}",
+              "{{gcp_asn}}",
+              "{{gcp_asn}}"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "extra_routes": {},
+  "path_preferences": {},
+  "service_policies": [],
+  "vrf_instances": {},
+  "tunnel_configs": {},
+  "oob_ip_config": {
+    "type": "dhcp",
+    "node1": {
+      "type": "dhcp"
+    }
+  },
+  "tunnel_provider_options": {
+    "jse": {},
+    "zscaler": {}
+  },
+  "ospf_config": {
+    "enabled": false,
+    "areas": {}
+  },
+  "name": "gcp_hub2",
+  "type": "gateway"
+}
