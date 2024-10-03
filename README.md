@@ -4,7 +4,7 @@ This repository contains sample code that can be used to deploy Mist-managed Jun
 
 ## About the structure of this repo
 
-In an effort to provide maximum reusability of the terraform code, this project has been organized into various modules. The individual deployment models included under the examples folder make use of these modules.
+In an effort to provide maximum reusability of the terraform code, this project has been organized into various modules. The individual deployment models included under the [examples](./examples) folder make use of these modules.
 
 ## About Network Connectivity Center
 
