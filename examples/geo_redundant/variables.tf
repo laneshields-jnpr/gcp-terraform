@@ -1,6 +1,6 @@
 variable "byol_image_link" {
   type    = string
-  default = "projects/tsena-297623/global/images/ssr-byol-20240930-1350-v0"
+  default = "projects/tsena-297623/global/images/ssr-byol-202503040845"
 }
 
 variable "external_net_name" {
