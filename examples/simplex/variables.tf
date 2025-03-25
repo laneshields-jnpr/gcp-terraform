@@ -1,7 +1,7 @@
 variable "byol_image_link" {
   description = "The GCP selfLink for the SSR BYOL image to be used when building the SSR VM"
   type        = string
-  default     = "projects/tsena-297623/global/images/ssr-byol-202503040845"
+  default     = "projects/mpi-juniper-marketplace/global/images/ssr-byol-202503040845-v1-mp"
 }
 
 variable "external_net_name" {
